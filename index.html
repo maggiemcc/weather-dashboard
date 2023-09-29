@@ -2,21 +2,49 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Dashboard</title>
-    <link src="./assets/styles.css">
+    <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 
 <body>
     <header>
-
+        <h1>Weather Dashboard</h1>
     </header>
+
     <main>
+        <section class="search-section">
+            <h2>Search for a City:</h2>
 
+            <form id="search-form">
+                <input id="search-input" type="text" placeholder="San Diego">
+                <button class="searchBtn">Search</button>
+            </form>
+
+            <div class="places-searched">
+
+            </div>
+
+        </section>
+
+        <section class="display-place">
+            <div class="display-today">
+
+            </div>
+            <div class="display-five-day">
+                <h2>5-Day Forecast:</h2>
+                <div class="weather">
+
+                </div>
+
+            </div>
+
+        </section>
     </main>
-    <footer>
 
+    <footer>
+        <h4>© Maggie McCausland 2023</h4>
     </footer>
 
     <script src="./assets/script.js"></script>

@@ -1,0 +1,45 @@
+:root {
+    --primary-color: #0b3970;
+    --secondary-color: #4d8eaa;
+    --third-color: #fff;
+    --fourth-color: #000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header, footer {
+    padding: 2%;
+    background: linear-gradient(0.25turn, var(--primary-color), var(--secondary-color));
+}
+
+h1, h4 {color: var(--third-color)}
+h4 {text-align: center;}
+
+main {
+    min-height: 82vh;
+    padding: 2%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.search-section, .display-place {
+    border: 2px solid var(--fourth-color);
+    padding: 2%;
+    width: 45%;
+}
+
+.search-section {
+    max-width: 350px;
+}
+
+form {
+    border-bottom: 2px solid var(--secondary-color);
+    padding: 5% 0;
+}
+
+.searchBtn {
+    cursor: pointer;
+}
