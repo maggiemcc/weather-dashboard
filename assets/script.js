@@ -13,9 +13,13 @@ function searchApi() {
             throw response.json();
         }
         return response.json();
+    }).then(function (data) {
+        console.log(data)
     })
-
-}
+        .catch(function (error) {
+            console.log(error);
+        })
+};
 
 searchApi()
 
