@@ -53,16 +53,16 @@ function searchApi(userSearchVal) {
                     weatherDay.className = "weatherDay";
 
                     var weatherIcon = document.createElement('img');
-                    var placeDate = document.createElement("h3");
-                    var placeTemp = document.createElement("h3");
-                    var placeWind = document.createElement("h3");
-                    var placeHumidity = document.createElement("h3");
+                    var placeDate = document.createElement("h4");
+                    var placeTemp = document.createElement("h4");
+                    var placeWind = document.createElement("h4");
+                    var placeHumidity = document.createElement("h4");
 
 
                     let iconCode = data.list[forecastDay].weather[0].icon;
                     let iconPath = "//openweathermap.org/img/w/" + iconCode + ".png";
                     weatherIcon.src = iconPath;
-
+                    placeDate.textContent = week[forecastDay].toUpperCase();
                     placeTemp.textContent = "Temp: " + data.list[forecastDay].main.temp + "ºF";
                     placeWind.textContent = "Wind: " + data.list[forecastDay].wind.speed + "MPH";
                     placeHumidity.textContent = "Humidity: " + data.list[forecastDay].main.humidity + "%";
