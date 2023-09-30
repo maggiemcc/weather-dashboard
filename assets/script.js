@@ -1,7 +1,8 @@
 var inputEl = document.querySelector('#search-input');
+var formEl = document.querySelector('#search-form');
 var weatherEl = document.querySelector(".fiveDayWeather")
 
-var userSearch = 'salt lake city';
+// var userSearch = 'salt lake city';
 
 // Create Array for days of the week
 var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -16,8 +17,8 @@ console.log("dayNum", dayNum)
 var forecastDay = dayNum;
 
 // Fetch API
-function searchApi() {
-    var fetchURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + userSearch + '&appid=6c3537dc7701b1d2d52795e48bb67bd3&units=imperial';
+function searchApi(userSearchVal) {
+    var fetchURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + userSearchVal + '&appid=6c3537dc7701b1d2d52795e48bb67bd3&units=imperial';
     console.log(fetchURL)
 
     fetch(fetchURL).then(function (response) {
@@ -34,7 +35,6 @@ function searchApi() {
 
             var placeName = document.createElement("h3");
             placeName.textContent = data.city.name;
-
 
             // Loop through to get each day
             for (var i = 0; i < data.list.length; i++) {
@@ -77,7 +77,19 @@ function searchApi() {
         .catch(function (error) {
             console.log(error);
         })
+
 };
 
-searchApi()
+function formSubmit(event) {
+    event.preventDefault();
 
+    var userSearchVal = document.querySelector('#search-input').value;
+    if (!userSearchVal) {
+        window.alert('You need a search input value!');
+        return;
+    }
+
+    searchApi(userSearchVal);
+}
+
+formEl.addEventListener('submit', formSubmit);
