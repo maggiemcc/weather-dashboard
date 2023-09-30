@@ -1,6 +1,8 @@
 var inputEl = document.querySelector('#search-input');
 var formEl = document.querySelector('#search-form');
-var weatherEl = document.querySelector(".fiveDayWeather")
+var weatherEl = document.querySelector(".fiveDayWeather");
+
+// CURRENT WEATHER: https://api.openweathermap.org/data/2.5/weather?
 
 // Create Array for days of the week
 var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -62,8 +64,8 @@ function searchApi(userSearchVal) {
                     weatherIcon.src = iconPath;
 
                     placeTemp.textContent = "Temp: " + data.list[forecastDay].main.temp + "ºF";
-                    placeWind.textContent = "Wind:" + data.list[forecastDay].wind.speed + "MPH";
-                    placeHumidity.textContent = "Humidity:" + data.list[forecastDay].main.humidity + "%";
+                    placeWind.textContent = "Wind: " + data.list[forecastDay].wind.speed + "MPH";
+                    placeHumidity.textContent = "Humidity: " + data.list[forecastDay].main.humidity + "%";
 
 
                     // APPEND ITEMS
@@ -93,6 +95,7 @@ function formSubmit(event) {
         return;
     }
 
+    weatherEl.textContent = " ";
     searchApi(userSearchVal);
 }
 
