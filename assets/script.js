@@ -1,7 +1,7 @@
 var inputEl = document.querySelector('#search-input');
 var formEl = document.querySelector('#search-form');
 var weatherFiveDay = document.querySelector(".fiveDayWeather");
-var weatherToday = document.querySelector(".display-today");
+var weatherToday = document.querySelector(".currentDayWeather");
 
 // Create Array for days of the week
 var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

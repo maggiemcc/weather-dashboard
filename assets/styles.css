@@ -32,17 +32,11 @@ main {
     grid-template-columns: 1fr 4fr;
 }
 
-.search-section,
-.display-place {
-    /* border: 2px solid var(--fourth-color); */
-    padding: 2%;
-    width: auto;
-}
-
 .search-section {
     border: 2px solid var(--primary-color);
     border-radius: 5px;
     max-width: 350px;
+    padding: 2%;
 }
 
 form {
@@ -54,16 +48,60 @@ form {
     cursor: pointer;
 }
 
+.display-place {
+    margin-left: 2%;
+}
+
+.display-today,
+.display-five-day {
+    min-height: 300px;
+    padding: 2%;
+}
+
+.display-today {
+    background: linear-gradient(0.25turn, var(--secondary-color), #056f9d);
+    color: var(--third-color);
+    border-radius: 5px;
+    height: 300px;
+    justify-content: center;
+    position: relative;
+}
+
+.currentDayWeather {
+    width: 95%;
+    text-align: center;
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
 .fiveDayWeather {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.fiveDayWeather .display {
+    width: 200px;
+    height: 190px;
+    padding: 2% 1%;
+    margin: 5px;
+    border-radius: 5px;
+    /* margin: 5px; */
+    background: linear-gradient(0.25turn, var(--secondary-color), #056f9d);
+    border: 1px solid var(--fourth-color);
 }
 
 .weatherDay {
-    /* border: 1px solid var(--fourth-color); */
+    border: 1px solid var(--fourth-color);
     background: linear-gradient(0.25turn, var(--secondary-color), #056f9d);
     color: var(--third-color);
-    min-width: 170px;
+    min-width: 200px;
+    min-height: 190px;
     padding: 2% 1%;
     margin: 5px;
     border-radius: 5px;
@@ -91,6 +129,8 @@ form {
 
     .display-place {
         width: auto;
+        margin-left: 0;
+        margin-top: 2%;
     }
 
     .fiveDayWeather {
@@ -101,5 +141,9 @@ form {
     .weatherDay {
         width: auto;
         padding: 2%;
+    }
+
+    .fiveDayWeather .display {
+        width: 100%;
     }
 }
