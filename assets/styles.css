@@ -21,14 +21,14 @@ h4 {text-align: center;}
 main {
     min-height: 82vh;
     padding: 2%;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 30fr 70fr;
 }
 
 .search-section, .display-place {
     border: 2px solid var(--fourth-color);
     padding: 2%;
-    width: 45%;
+    width: auto;
 }
 
 .search-section {
@@ -42,4 +42,51 @@ form {
 
 .searchBtn {
     cursor: pointer;
+}
+
+.fiveDayWeather {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.weatherDay {
+    border: 1px solid var(--fourth-color);
+    background-color: var(--primary-color);
+    color: var(--third-color);
+    min-width: 180px;
+    padding: 2%;
+    margin: 10px;
+}
+
+
+@media screen and (max-width: 1000px) {
+
+    main {
+        min-height: 90vh;
+        grid-template-columns: auto;
+    }
+    
+    .search-section, .display-place {
+        width: auto;
+    }
+
+    .search-section {
+        max-width: none;
+        width: auto;
+    }
+
+    .display-place {
+        width: auto;
+    }
+
+    .fiveDayWeather {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    
+    .weatherDay {
+        width: auto;
+        padding: 2%;
+    }
 }

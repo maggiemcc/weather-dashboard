@@ -1,16 +1,10 @@
 var inputEl = document.querySelector('#search-input');
-
-// Test variables
-var placeName = document.querySelector('#place-name');
-var placeDate = document.querySelector('#place-date');
-var placeTemp = document.querySelector('#place-temp');
-var placeWind = document.querySelector('#place-wind');
-var placeHumidity = document.querySelector('#place-humidity');
+var weatherEl = document.querySelector(".fiveDayWeather")
 
 var userSearch = 'salt lake city';
 
 // Create Array for days of the week
-var weatherDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 // Get day
 var day = new Date();
@@ -23,8 +17,6 @@ var forecastDay = dayNum;
 
 // Fetch API
 function searchApi() {
-    // var fetchURL = `https://api.openweathermap.org/data/2.5/forecast?q=${userSearch}&appid=6c3537dc7701b1d2d52795e48bb67bd3`
-
     var fetchURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + userSearch + '&appid=6c3537dc7701b1d2d52795e48bb67bd3&units=imperial';
     console.log(fetchURL)
 
@@ -39,7 +31,11 @@ function searchApi() {
         if (!data.list.length) {
             console.log("no results");
         } else {
-            
+
+            var placeName = document.createElement("h3");
+            placeName.textContent = data.city.name;
+
+
             // Loop through to get each day
             for (var i = 0; i < data.list.length; i++) {
                 var time = data.list[i].dt_txt;
@@ -49,20 +45,30 @@ function searchApi() {
 
                     // Reset to first item of array if equal to last item in array
                     if (forecastDay === 7) {
-                        forecastDay = 0; 
+                        forecastDay = 0;
                     }
 
-                    placeName.textContent = data.city.name;
-                    placeDate.textContent = weatherDay[forecastDay];
+                    // CREATE ELEMENTS FOR EACH DAY/INFO
+                    var weatherDay = document.createElement("div");
+                    weatherDay.className = "weatherDay";
+                    var placeDate = document.createElement("h3");
+                    var placeTemp = document.createElement("h3");
+                    var placeWind = document.createElement("h3");
+                    var placeHumidity = document.createElement("h3");
+
+
+                    placeDate.textContent = week[forecastDay];
                     placeTemp.textContent = "Temp: " + data.list[forecastDay].main.temp + "ºF";
                     placeWind.textContent = "Wind:" + data.list[forecastDay].wind.speed + "MPH";
                     placeHumidity.textContent = "Humidity:" + data.list[forecastDay].main.humidity + "%";
 
-                    console.log("time", time)
-                    console.log(">date", placeDate.textContent)
-                    console.log(">temp", placeTemp.textContent)
-                    console.log(">wind", placeWind.textContent)
-                    console.log(">hum", placeHumidity.textContent)
+
+                    // APPEND ITEMS
+                    weatherEl.appendChild(weatherDay);
+                    weatherDay.appendChild(placeDate);
+                    weatherDay.appendChild(placeTemp);
+                    weatherDay.appendChild(placeWind);
+                    weatherDay.appendChild(placeHumidity);
 
                 }
             }
