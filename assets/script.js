@@ -2,8 +2,6 @@ var inputEl = document.querySelector('#search-input');
 var formEl = document.querySelector('#search-form');
 var weatherEl = document.querySelector(".fiveDayWeather")
 
-// var userSearch = 'salt lake city';
-
 // Create Array for days of the week
 var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -48,16 +46,21 @@ function searchApi(userSearchVal) {
                         forecastDay = 0;
                     }
 
-                    // CREATE ELEMENTS FOR EACH DAY/INFO
+                    // CREATE ELEMENTS FOR EACH DAY/INFO & ADD TEXT CONTENT
                     var weatherDay = document.createElement("div");
                     weatherDay.className = "weatherDay";
+
+                    var weatherIcon = document.createElement('img');
                     var placeDate = document.createElement("h3");
                     var placeTemp = document.createElement("h3");
                     var placeWind = document.createElement("h3");
                     var placeHumidity = document.createElement("h3");
 
 
-                    placeDate.textContent = week[forecastDay];
+                    let iconCode = data.list[forecastDay].weather[0].icon;
+                    let iconPath = "//openweathermap.org/img/w/" + iconCode + ".png";
+                    weatherIcon.src = iconPath;
+
                     placeTemp.textContent = "Temp: " + data.list[forecastDay].main.temp + "ºF";
                     placeWind.textContent = "Wind:" + data.list[forecastDay].wind.speed + "MPH";
                     placeHumidity.textContent = "Humidity:" + data.list[forecastDay].main.humidity + "%";
@@ -65,6 +68,7 @@ function searchApi(userSearchVal) {
 
                     // APPEND ITEMS
                     weatherEl.appendChild(weatherDay);
+                    weatherDay.appendChild(weatherIcon);
                     weatherDay.appendChild(placeDate);
                     weatherDay.appendChild(placeTemp);
                     weatherDay.appendChild(placeWind);
