@@ -77,6 +77,10 @@ form {
     transform: translateY(-50%);
 }
 
+.display-five-day {
+    padding: 2% 0;
+}
+
 
 .fiveDayWeather {
     display: flex;
@@ -85,26 +89,14 @@ form {
     border-radius: 5px;
 }
 
-.fiveDayWeather .display {
-    width: 200px;
+.fiveDayWeather .display, .weatherDay {
+    width: 220px;
     height: 170px;
     padding: 2% 1%;
     margin: 5px;
     border-radius: 5px;
-    /* margin: 5px; */
     background: linear-gradient(0.25turn, var(--secondary-color), #056f9d);
     border: 1px solid var(--fourth-color);
-}
-
-.weatherDay {
-    border: 1px solid var(--fourth-color);
-    background: linear-gradient(0.25turn, var(--secondary-color), #056f9d);
-    color: var(--third-color);
-    min-width: 200px;
-    min-height: 170px;
-    padding: 2% 1%;
-    margin: 5px;
-    border-radius: 5px;
     justify-content: left;
     text-align: left;
 }
