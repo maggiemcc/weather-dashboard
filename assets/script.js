@@ -7,9 +7,9 @@ var weatherToday = document.querySelector(".currentDayWeather");
 var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 // Get day
+var currentDay = dayjs().format("dddd: MMMM DD, YYYY");
 var day = new Date();
 var dayNum = day.getDay();
-
 
 // FETCH FIVE DAY FORECAST
 function searchFiveDayApi(userSearchVal) {
@@ -27,14 +27,18 @@ function searchFiveDayApi(userSearchVal) {
         } else {
 
             var forecastDay = dayNum;
+            console.log(data);
 
             // LOOP THOUGH TO GET EACH DAY
             for (var i = 0; i < data.list.length; i++) {
                 var time = data.list[i].dt_txt;
 
+                 // INSTEAD OF GRABING WEATHER FOR ONLY SATURDAY/FIRST FIVE OBJECTS, GETS ONE WEATHER OBJECT FOR EACH DAY for 3:00
                 if (time.includes('03:00:00')) {
-                    // INSTEAD OF GRABING WEATHER FOR ONLY SATURDAY/FIRST FIVE OBJECTS, GETS ONE WEATHER OBJECT FOR EACH DAY
                     forecastDay += 1;
+
+                    console.log("time>", time)
+                    console.log("Weather:", data.list[i]);
 
                     // Reset to first item of array if equal to last item in array
                     if (forecastDay === 7) {
@@ -45,26 +49,28 @@ function searchFiveDayApi(userSearchVal) {
                     var weatherDay = document.createElement("div");
                     weatherDay.className = "weatherDay";
 
+                    var placeWeekday = document.createElement("h4");
+                    placeWeekday.textContent = dayjs(data.list[i].dt_txt.slice(0,10)).format('dddd: MMM DD, YYYY');;
+                    
                     var weatherIcon = document.createElement('img');
-                    var placeDate = document.createElement("h4");
-                    var placeTemp = document.createElement("h4");
-                    var placeWind = document.createElement("h4");
-                    var placeHumidity = document.createElement("h4");
-
-
-                    var iconCode = data.list[forecastDay].weather[0].icon;
+                    var iconCode = data.list[i].weather[0].icon;
                     var iconPath = "//openweathermap.org/img/w/" + iconCode + ".png";
                     weatherIcon.src = iconPath;
-                    placeDate.textContent = week[forecastDay].toUpperCase();
-                    placeTemp.textContent = "Temp: " + data.list[forecastDay].main.temp + "ºF";
-                    placeWind.textContent = "Wind: " + data.list[forecastDay].wind.speed + " MPH";
-                    placeHumidity.textContent = "Humidity: " + data.list[forecastDay].main.humidity + "%";
+
+                    var placeTemp = document.createElement("h4");
+                    placeTemp.textContent = "Temp: " + data.list[i].main.temp + "ºF";
+
+                    var placeWind = document.createElement("h4");
+                    placeWind.textContent = "Wind: " + data.list[i].wind.speed + " MPH";
+
+                    var placeHumidity = document.createElement("h4");
+                    placeHumidity.textContent = "Humidity: " + data.list[i].main.humidity + "%";
 
 
                     // APPEND ITEMS
                     weatherFiveDay.appendChild(weatherDay);
+                    weatherDay.appendChild(placeWeekday);
                     weatherDay.appendChild(weatherIcon);
-                    weatherDay.appendChild(placeDate);
                     weatherDay.appendChild(placeTemp);
                     weatherDay.appendChild(placeWind);
                     weatherDay.appendChild(placeHumidity);
@@ -95,6 +101,8 @@ function searchTodayApi(userSearchVal) {
             // CREATE ELEMENTS
             var placeName = document.createElement("h2");
             placeName.textContent = data.name;
+            var placeDate = document.createElement("h2");
+            placeDate.textContent = currentDay;
 
             var weatherIcon = document.createElement('img');
             var iconCode = data.weather[0].icon;
@@ -113,6 +121,7 @@ function searchTodayApi(userSearchVal) {
 
             // APPEND ITEMS
             weatherToday.appendChild(placeName);
+            weatherToday.appendChild(placeDate);
             weatherToday.appendChild(weatherIcon);
             weatherToday.appendChild(placeTemp);
             weatherToday.appendChild(placeWind);
