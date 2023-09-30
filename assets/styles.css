@@ -29,7 +29,7 @@ main {
     min-height: 82vh;
     padding: 2%;
     display: grid;
-    grid-template-columns: 30fr 70fr;
+    grid-template-columns: 1fr 4fr;
 }
 
 .search-section,
@@ -40,6 +40,7 @@ main {
 }
 
 .search-section {
+    /* border: 2px solid var(--fourth-color); */
     max-width: 350px;
 }
 
@@ -62,7 +63,7 @@ form {
     background: linear-gradient(0.25turn, var(--secondary-color), #056f9d);
     color: var(--third-color);
     min-width: 170px;
-    padding: 2%;
+    padding: 2% 1%;
     margin: 5px;
     border-radius: 5px;
     justify-content: left;
@@ -70,11 +71,11 @@ form {
 }
 
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1200px) {
 
     main {
         min-height: 90vh;
-        grid-template-columns: auto;
+        grid-template-columns: 1fr;
     }
 
     .search-section,

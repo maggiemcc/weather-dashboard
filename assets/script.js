@@ -1,6 +1,7 @@
 var inputEl = document.querySelector('#search-input');
 var formEl = document.querySelector('#search-form');
-var weatherEl = document.querySelector(".fiveDayWeather");
+var weatherFiveDay = document.querySelector(".fiveDayWeather");
+var weatherToday = document.querySelector(".display-today");
 
 // CURRENT WEATHER: https://api.openweathermap.org/data/2.5/weather?
 
@@ -9,15 +10,15 @@ var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
 
 // Get day
 var day = new Date();
-console.log("day", day)
+// console.log("day", day)
 
 var dayNum = day.getDay();
-console.log("dayNum", dayNum)
+// console.log("dayNum", dayNum)
 
 var forecastDay = dayNum;
 
-// Fetch API
-function searchApi(userSearchVal) {
+// FETCH FIVE DAY FORECAST
+function searchFiveDayApi(userSearchVal) {
     var fetchURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + userSearchVal + '&appid=6c3537dc7701b1d2d52795e48bb67bd3&units=imperial';
     console.log(fetchURL)
 
@@ -27,15 +28,11 @@ function searchApi(userSearchVal) {
         }
         return response.json();
     }).then(function (data) {
-        console.log(data);
+        console.log("5day >", data);
 
         if (!data.list.length) {
             console.log("no results");
         } else {
-
-            var placeName = document.createElement("h3");
-            placeName.textContent = data.city.name;
-
             // Loop through to get each day
             for (var i = 0; i < data.list.length; i++) {
                 var time = data.list[i].dt_txt;
@@ -59,8 +56,8 @@ function searchApi(userSearchVal) {
                     var placeHumidity = document.createElement("h4");
 
 
-                    let iconCode = data.list[forecastDay].weather[0].icon;
-                    let iconPath = "//openweathermap.org/img/w/" + iconCode + ".png";
+                    var iconCode = data.list[forecastDay].weather[0].icon;
+                    var iconPath = "//openweathermap.org/img/w/" + iconCode + ".png";
                     weatherIcon.src = iconPath;
                     placeDate.textContent = week[forecastDay].toUpperCase();
                     placeTemp.textContent = "Temp: " + data.list[forecastDay].main.temp + "ºF";
@@ -69,7 +66,7 @@ function searchApi(userSearchVal) {
 
 
                     // APPEND ITEMS
-                    weatherEl.appendChild(weatherDay);
+                    weatherFiveDay.appendChild(weatherDay);
                     weatherDay.appendChild(weatherIcon);
                     weatherDay.appendChild(placeDate);
                     weatherDay.appendChild(placeTemp);
@@ -78,6 +75,35 @@ function searchApi(userSearchVal) {
 
                 }
             }
+        }
+    })
+        .catch(function (error) {
+            console.log(error);
+        })
+};
+
+// FETCH TODAYS WEATHER
+function searchTodayApi(userSearchVal) {
+    var fetchURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + userSearchVal + '&appid=6c3537dc7701b1d2d52795e48bb67bd3&units=imperial';
+    console.log(fetchURL)
+
+    fetch(fetchURL).then(function (response) {
+        if (!response.ok) {
+            throw response.json();
+        }
+        return response.json();
+    }).then(function (data) {
+        console.log("today >>", data);
+
+        if (!data.weather.length) {
+            console.log("no results");
+        } else {
+            var placeName = document.createElement("h3");
+            placeName.textContent = data.name;
+
+
+            // APPEND ITEMS
+            weatherToday.appendChild(placeName);
         }
     })
         .catch(function (error) {
@@ -95,8 +121,10 @@ function formSubmit(event) {
         return;
     }
 
-    weatherEl.textContent = " ";
-    searchApi(userSearchVal);
+    weatherFiveDay.textContent = " ";
+    weatherToday.textContent = " ";
+    searchFiveDayApi(userSearchVal);
+    searchTodayApi(userSearchVal);
 }
 
 formEl.addEventListener('submit', formSubmit);
