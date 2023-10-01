@@ -33,7 +33,7 @@ function searchFiveDayApi(userSearchVal) {
             for (var i = 0; i < data.list.length; i++) {
                 var time = data.list[i].dt_txt;
 
-                 // INSTEAD OF GRABING WEATHER FOR ONLY SATURDAY/FIRST FIVE OBJECTS, GETS ONE WEATHER OBJECT FOR EACH DAY for 3:00
+                // INSTEAD OF GRABING WEATHER FOR ONLY SATURDAY/FIRST FIVE OBJECTS, GETS ONE WEATHER OBJECT FOR EACH DAY for 3:00
                 if (time.includes('03:00:00')) {
                     forecastDay += 1;
 
@@ -47,8 +47,8 @@ function searchFiveDayApi(userSearchVal) {
                     weatherDay.className = "weatherDay";
 
                     var placeWeekday = document.createElement("h4");
-                    placeWeekday.textContent = dayjs(data.list[i].dt_txt.slice(0,10)).format('dddd: MMM DD, YYYY');;
-                    
+                    placeWeekday.textContent = dayjs(data.list[i].dt_txt.slice(0, 10)).format('dddd: MMM DD, YYYY');;
+
                     var weatherIcon = document.createElement('img');
                     var iconCode = data.list[i].weather[0].icon;
                     var iconPath = "//openweathermap.org/img/w/" + iconCode + ".png";
@@ -78,6 +78,7 @@ function searchFiveDayApi(userSearchVal) {
     })
         .catch(function (error) {
             console.log(error);
+            alert(`try again, couldn't find ${userSearchVal}`)
         })
 };
 
@@ -93,7 +94,6 @@ function searchTodayApi(userSearchVal) {
     }).then(function (data) {
 
         if (!data.weather.length) {
-            console.log("no results");
         } else {
             // CREATE ELEMENTS
             var placeName = document.createElement("h2");
@@ -124,14 +124,14 @@ function searchTodayApi(userSearchVal) {
             weatherToday.appendChild(placeWind);
             weatherToday.appendChild(placeHumidity);
         }
+        
     })
         .catch(function (error) {
             console.log(error);
         })
-
 };
 
-
+// FORM SUBMIT/CREATE LOCALSTORAGE
 function formSubmit(event) {
     event.preventDefault();
 
@@ -146,10 +146,10 @@ function formSubmit(event) {
 
     var placesArr = [];
 
-    if(!localStorage.getItem('places')){
+    if (!localStorage.getItem('places')) {
         placesArr.push(userSearchVal);
         localStorage.setItem('places', JSON.stringify(placesArr));
-    } 
+    }
     else {
         placesArr = JSON.parse(localStorage.getItem('places'));
         placesArr.push(userSearchVal);
@@ -159,21 +159,44 @@ function formSubmit(event) {
     searchFiveDayApi(userSearchVal);
     searchTodayApi(userSearchVal);
     displaySavedSearches();
+    displayBtnSearch();
 }
 
+// CREATE BUTTON FOR EACH LOCALSTORAGE PLACE
 function displaySavedSearches() {
     placesSearched.innerHTML = '';
     var arrayFromStorage = JSON.parse(localStorage.getItem('places'));
 
-        for (var i = 0; i < arrayFromStorage.length; i++){
+    if (arrayFromStorage < 1) {
+        console.log("empty")
+
+    } else {
+        for (var i = 0; i < arrayFromStorage.length; i++) {
             var placeBtn = document.createElement('button');
             placeBtn.className = "placeBtn";
             placeBtn.textContent = arrayFromStorage[i];
             placesSearched.appendChild(placeBtn);
-
-            var userSearchVal = placeBtn.textContent;
+        }
     }
 }
 
+
+// DISPLAY LOCALSTORAGE BUTTONS
+function displayBtnSearch() {
+    var allButtons = document.querySelectorAll(".placeBtn");
+
+    for (var i = 0; i < allButtons.length; i++) {
+        allButtons[i].addEventListener('click', function () {
+            weatherFiveDay.innerHTML = "";
+            weatherToday.innerHTML = "";
+            var userSearchVal = this.innerHTML;
+            searchFiveDayApi(userSearchVal);
+            searchTodayApi(userSearchVal);
+        })
+    }
+};
+
+// CALL FUNCTIONS
 formEl.addEventListener('submit', formSubmit);
 displaySavedSearches();
+displayBtnSearch();
