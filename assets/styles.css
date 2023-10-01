@@ -48,6 +48,19 @@ form {
     cursor: pointer;
 }
 
+.placeBtn {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--third-color);
+    padding: 2%;
+    margin: 2% 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.placeBtn:hover {
+    background-color: var(--secondary-color);
+}
+
 .display-place {
     margin-left: 2%;
 }

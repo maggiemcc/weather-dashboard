@@ -2,6 +2,7 @@ var inputEl = document.querySelector('#search-input');
 var formEl = document.querySelector('#search-form');
 var weatherFiveDay = document.querySelector(".fiveDayWeather");
 var weatherToday = document.querySelector(".currentDayWeather");
+var placesSearched = document.querySelector('.places-searched')
 
 // Create Array for days of the week
 var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -27,7 +28,6 @@ function searchFiveDayApi(userSearchVal) {
         } else {
 
             var forecastDay = dayNum;
-            console.log(data);
 
             // LOOP THOUGH TO GET EACH DAY
             for (var i = 0; i < data.list.length; i++) {
@@ -36,9 +36,6 @@ function searchFiveDayApi(userSearchVal) {
                  // INSTEAD OF GRABING WEATHER FOR ONLY SATURDAY/FIRST FIVE OBJECTS, GETS ONE WEATHER OBJECT FOR EACH DAY for 3:00
                 if (time.includes('03:00:00')) {
                     forecastDay += 1;
-
-                    console.log("time>", time)
-                    console.log("Weather:", data.list[i]);
 
                     // Reset to first item of array if equal to last item in array
                     if (forecastDay === 7) {
@@ -134,6 +131,7 @@ function searchTodayApi(userSearchVal) {
 
 };
 
+
 function formSubmit(event) {
     event.preventDefault();
 
@@ -142,11 +140,40 @@ function formSubmit(event) {
         window.alert('You need a search input value!');
         return;
     }
+    weatherFiveDay.innerHTML = "";
+    weatherToday.innerHTML = "";
+    document.querySelector('#search-input').value = "";
 
-    weatherFiveDay.innerHTML = " ";
-    weatherToday.innerHTML = " ";
+    var placesArr = [];
+
+    if(!localStorage.getItem('places')){
+        placesArr.push(userSearchVal);
+        localStorage.setItem('places', JSON.stringify(placesArr));
+    } 
+    else {
+        placesArr = JSON.parse(localStorage.getItem('places'));
+        placesArr.push(userSearchVal);
+        localStorage.setItem('places', JSON.stringify(placesArr));
+    }
+
     searchFiveDayApi(userSearchVal);
     searchTodayApi(userSearchVal);
+    displaySavedSearches();
+}
+
+function displaySavedSearches() {
+    placesSearched.innerHTML = '';
+    var arrayFromStorage = JSON.parse(localStorage.getItem('places'));
+
+        for (var i = 0; i < arrayFromStorage.length; i++){
+            var placeBtn = document.createElement('button');
+            placeBtn.className = "placeBtn";
+            placeBtn.textContent = arrayFromStorage[i];
+            placesSearched.appendChild(placeBtn);
+
+            var userSearchVal = placeBtn.textContent;
+    }
 }
 
 formEl.addEventListener('submit', formSubmit);
+displaySavedSearches();
