@@ -1,5 +1,6 @@
 var inputEl = document.querySelector('#search-input');
 var formEl = document.querySelector('#search-form');
+var clearHistory = document.querySelector('.clearBtn');
 var weatherFiveDay = document.querySelector(".fiveDayWeather");
 var weatherToday = document.querySelector(".currentDayWeather");
 var placesSearched = document.querySelector('.places-searched')
@@ -195,6 +196,12 @@ function displayBtnSearch() {
         })
     }
 };
+
+
+clearHistory.addEventListener('click', function() {
+    localStorage.clear();
+    placesSearched.innerHTML = "";
+})
 
 // CALL FUNCTIONS
 formEl.addEventListener('submit', formSubmit);
