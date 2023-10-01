@@ -80,6 +80,7 @@ function searchFiveDayApi(userSearchVal) {
         .catch(function (error) {
             console.log(error);
             alert(`try again, couldn't find ${userSearchVal}`);
+            window.location.reload();
         })
 };
 
@@ -154,12 +155,13 @@ function formSubmit(event) {
     else {
         placesArr = JSON.parse(localStorage.getItem('places'));
 
+        // CHECK IF ITEM ALREADY EXISTS IN LOCALSTORAGE
         var placeExists = placesArr.find(place => place === userSearchVal.toLowerCase());
         if (!placeExists) {
             placesArr.push(userSearchVal);
             localStorage.setItem('places', JSON.stringify(placesArr));
         } else if (placeExists){
-            console.log(`already added to storage: ${userSearchVal}`);
+            console.log(`Place already added to storage: ${userSearchVal}`);
         }
     }
 
@@ -202,7 +204,7 @@ function displayBtnSearch() {
     }
 };
 
-
+// CLEAR LOCALSTORAGE
 clearHistory.addEventListener('click', function () {
     localStorage.clear();
     placesSearched.innerHTML = "";
