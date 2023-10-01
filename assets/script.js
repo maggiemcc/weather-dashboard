@@ -79,7 +79,7 @@ function searchFiveDayApi(userSearchVal) {
     })
         .catch(function (error) {
             console.log(error);
-            alert(`try again, couldn't find ${userSearchVal}`)
+            alert(`try again, couldn't find ${userSearchVal}`);
         })
 };
 
@@ -125,7 +125,7 @@ function searchTodayApi(userSearchVal) {
             weatherToday.appendChild(placeWind);
             weatherToday.appendChild(placeHumidity);
         }
-        
+
     })
         .catch(function (error) {
             console.log(error);
@@ -153,8 +153,14 @@ function formSubmit(event) {
     }
     else {
         placesArr = JSON.parse(localStorage.getItem('places'));
-        placesArr.push(userSearchVal);
-        localStorage.setItem('places', JSON.stringify(placesArr));
+
+        var placeExists = placesArr.find(place => place === userSearchVal.toLowerCase());
+        if (!placeExists) {
+            placesArr.push(userSearchVal);
+            localStorage.setItem('places', JSON.stringify(placesArr));
+        } else if (placeExists){
+            console.log(`already added to storage: ${userSearchVal}`);
+        }
     }
 
     searchFiveDayApi(userSearchVal);
@@ -185,7 +191,6 @@ function displaySavedSearches() {
 // DISPLAY LOCALSTORAGE BUTTONS
 function displayBtnSearch() {
     var allButtons = document.querySelectorAll(".placeBtn");
-
     for (var i = 0; i < allButtons.length; i++) {
         allButtons[i].addEventListener('click', function () {
             weatherFiveDay.innerHTML = "";
@@ -198,7 +203,7 @@ function displayBtnSearch() {
 };
 
 
-clearHistory.addEventListener('click', function() {
+clearHistory.addEventListener('click', function () {
     localStorage.clear();
     placesSearched.innerHTML = "";
 })
