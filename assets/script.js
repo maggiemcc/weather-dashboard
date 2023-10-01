@@ -137,7 +137,7 @@ function searchTodayApi(userSearchVal) {
 function formSubmit(event) {
     event.preventDefault();
 
-    var userSearchVal = document.querySelector('#search-input').value;
+    var userSearchVal = document.querySelector('#search-input').value.toLowerCase();
     if (!userSearchVal) {
         window.alert('You need a search input value!');
         return;
