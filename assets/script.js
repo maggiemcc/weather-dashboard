@@ -10,8 +10,6 @@ var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
 
 // Get day
 var currentDay = dayjs().format("dddd: MMMM DD, YYYY");
-var day = new Date();
-var dayNum = day.getDay();
 
 // FETCH FIVE DAY FORECAST
 function searchFiveDayApi(userSearchVal) {
@@ -28,20 +26,12 @@ function searchFiveDayApi(userSearchVal) {
             console.log("no results");
         } else {
 
-            var forecastDay = dayNum;
-
             // LOOP THOUGH TO GET EACH DAY
             for (var i = 0; i < data.list.length; i++) {
                 var time = data.list[i].dt_txt;
 
                 // INSTEAD OF GRABING WEATHER FOR ONLY SATURDAY/FIRST FIVE OBJECTS, GETS ONE WEATHER OBJECT FOR EACH DAY for 3:00
                 if (time.includes('03:00:00')) {
-                    forecastDay += 1;
-
-                    // Reset to first item of array if equal to last item in array
-                    if (forecastDay === 7) {
-                        forecastDay = 0;
-                    }
 
                     // CREATE ELEMENTS FOR EACH DAY/INFO & ADD TEXT CONTENT
                     var weatherDay = document.createElement("div");
@@ -168,7 +158,7 @@ function formSubmit(event) {
     searchFiveDayApi(userSearchVal);
     searchTodayApi(userSearchVal);
     displaySavedSearches();
-    displayBtnSearch();
+    clickEvents();
 }
 
 // CREATE BUTTON FOR EACH LOCALSTORAGE PLACE
@@ -190,8 +180,8 @@ function displaySavedSearches() {
 }
 
 
-// DISPLAY LOCALSTORAGE BUTTONS
-function displayBtnSearch() {
+// ADD CLICK EVENTS FOR BUTTONS
+function clickEvents() {
     var allButtons = document.querySelectorAll(".placeBtn");
     for (var i = 0; i < allButtons.length; i++) {
         allButtons[i].addEventListener('click', function () {
@@ -213,4 +203,4 @@ clearHistory.addEventListener('click', function () {
 // CALL FUNCTIONS
 formEl.addEventListener('submit', formSubmit);
 displaySavedSearches();
-displayBtnSearch();
+clickEvents();
