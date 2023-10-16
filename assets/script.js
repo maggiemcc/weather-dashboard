@@ -5,9 +5,6 @@ var weatherFiveDay = document.querySelector(".fiveDayWeather");
 var weatherToday = document.querySelector(".currentDayWeather");
 var placesSearched = document.querySelector('.places-searched')
 
-// Create Array for days of the week
-var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
 // Get day
 var currentDay = dayjs().format("dddd: MMMM DD, YYYY");
 
